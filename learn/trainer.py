@@ -3,8 +3,8 @@ import pickle
 import pandas
 from sklearn.grid_search import GridSearchCV
 import tree.tree as A
-import tree_with_age.tree as B
-import tree_with_mean_age.tree as C
+import tree.tree_with_age as B
+import tree.tree_with_mean_age as C
 
 
 DATA = pandas.read_csv('train/2.train.cross.csv')
