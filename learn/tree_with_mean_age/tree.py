@@ -1,13 +1,9 @@
-import os
-import pickle
 import pandas
 from numpy import nan
 from sklearn import tree
-from sklearn.grid_search import GridSearchCV
 
-DATA = pandas.read_csv('train/2.train.cross.csv')
-
-PICKLE = 'learn/tree-with-median-age/tree.pkl'
+NAME = 'Tree with Mean Age'
+PICKLE = 'learn/tree_with_mean_age/tree.pkl'
 
 FEATURES = [
     'age',
@@ -33,12 +29,10 @@ GRID = {
     'max_leaf_nodes': [None, 16, 32, 64, 128, 256]
 }
 
-if not os.path.isfile(PICKLE):
-    print('No pickle file found, training a new classifier')
-
+def data(imputed_data):
     X = pandas.DataFrame()
     for feature in FEATURES:
-        X[feature] = DATA[feature]
+        X[feature] = imputed_data[feature]
 
     # Impute average age instead of -1
     for i in range(len(X)):
@@ -47,26 +41,7 @@ if not os.path.isfile(PICKLE):
             X[i, 0] = nan
     X = X.fillna(X.mean()['age'])
 
-    Y = DATA['survived']
+    return X
 
+def classifier():
     classifier = tree.DecisionTreeClassifier(random_state=0)
-    classifier = GridSearchCV(
-        estimator=classifier,
-        param_grid=GRID,
-        verbose=100,
-    )
-
-    classifier.fit(X, Y)
-
-    with open(PICKLE, 'wb') as output:
-        pickle.dump(classifier, output)
-
-else:
-    print('Loading pickle file!')
-    classifier = None
-    with open(PICKLE, 'rb') as file_stream:
-        classifier = pickle.load(file_stream)
-
-
-print(classifier.best_score_)
-print(classifier.best_params_)

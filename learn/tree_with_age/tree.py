@@ -1,11 +1,11 @@
 import pandas
 from sklearn import tree
 
-NAME = 'Tree'
-PICKLE = 'learn/tree/tree.pkl'
+NAME = 'Tree With Age'
+PICKLE = 'learn/tree_with_age/tree.pkl'
 
 FEATURES = [
-    # Ignoring age, since it is not always known
+    'age',
     'pclass',
     'sibsp',
     'parch',
@@ -32,7 +32,6 @@ def data(imputed_data):
     X = pandas.DataFrame()
     for feature in FEATURES:
         X[feature] = imputed_data[feature]
-    
     return X
 
 def classifier():
