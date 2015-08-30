@@ -6,10 +6,10 @@ from sklearn.grid_search import GridSearchCV
 
 DATA = pandas.read_csv('train/2.train.cross.csv')
 
-PICKLE = 'learn/tree/tree.pkl'
+PICKLE = 'learn/tree/tree-with-age.pkl'
 
 FEATURES = [
-    # Ignoring age, since it is not always known
+    'age',
     'pclass',
     'sibsp',
     'parch',
