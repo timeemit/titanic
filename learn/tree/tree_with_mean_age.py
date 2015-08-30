@@ -37,7 +37,6 @@ def data(imputed_data):
     # Impute average age instead of -1
     for i in range(len(X)):
         if X.iloc[i, 0] == -1.0:
-            print('False age found!')
             X[i, 0] = nan
     X = X.fillna(X.mean()['age'])
 

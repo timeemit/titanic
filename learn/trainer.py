@@ -52,7 +52,7 @@ def get_classifier(model):
 def test_data():
     return DATA, DATA['survived']
 
-def execute(x, y):
+def compare(x, y):
     df = pandas.DataFrame()
     for model in MODELS:
         print('Considering model: {}'.format(model.NAME))
@@ -66,6 +66,7 @@ def execute(x, y):
         df[model.NAME] = series
     return df
 
-x, y = test_data()
-execution = execute(x, y)
-print(execution)
+if __name__ == 'main':
+    x, y = test_data()
+    comparison = compare(x, y)
+    print(comparison)
