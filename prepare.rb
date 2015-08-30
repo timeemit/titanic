@@ -17,13 +17,12 @@ require 'colorize'
 # Number of fellow travelers on the same ticket within 14 years of age.
 # Percentage of travelers on the same ticket with same last name
 
-DATA_FILE = './data/train.csv'
-TEST_FILE = './data/test.csv'
-PRUNED_FILE = './prepare/pruned.csv'
+DATA_FILE = './kaggle-data/test.csv'
+PRUNED_FILE = './predict/input.csv'
 
 RAW_ATTRIBUTES = [
   :passenger_id,
-  :survived,
+  # :survived,
   :pclass,        # [ 1, 2, 3 ]
   :name,
   :sex,           # %w( male female )
@@ -38,7 +37,7 @@ RAW_ATTRIBUTES = [
 
 PRUNED_ATTRIBUTES = [
   :passenger_id,  # same
-  :survived,      # same
+  # :survived,      # same
   :pclass,        # same
   :age,           # same
   :sibsp,         # same
@@ -94,7 +93,7 @@ ticket_groups = {}
 extract_ticket_groups = Proc.new do |row|
   ticket = row['Ticket']
   age_surname = {
-    survived: row['Survived'],
+    # survived: row['Survived'],
     sex: row['Sex'],
     age: row['Age'].to_i,
     surname: row['Name'].match(LAST_NAME_REGEX).to_s 
@@ -108,7 +107,6 @@ end
 
 # Parse the Training Data for Group Information
 CSV.foreach(DATA_FILE, headers: :first_row, &extract_ticket_groups)
-CSV.foreach(TEST_FILE, headers: :first_row, &extract_ticket_groups)
 
 # ap "#{ticket_groups.values.select{|array| array.size == 1}.length} are empty"
 # ap ticket_groups.values.reject{|array| array.size == 1}
