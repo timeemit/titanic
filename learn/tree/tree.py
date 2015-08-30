@@ -1,9 +1,12 @@
+import os
+import pickle
 import pandas
 from sklearn import tree
 from sklearn.grid_search import GridSearchCV
 
-DATA        = pandas.read_csv('train/1.train.csv')
-VALIDATION  = pandas.read_csv('train/2.cross_validation.csv')
+DATA = pandas.read_csv('train/0.all.csv')
+
+PICKLE = 'learn/tree/tree.pkl'
 
 FEATURES = [
     # Ignoring age, since it is not always known
@@ -29,21 +32,33 @@ GRID = {
     'max_leaf_nodes': [None, 16, 32, 64, 128, 256]
 }
 
-# 1. Train
+if not os.path.isfile('learn/tree/tree.pkl'):
+    print('No pickle file found, training a new classifier')
 
-X = pandas.DataFrame()
-for feature in FEATURES:
-    X[feature] = DATA[feature]
+    X = pandas.DataFrame()
+    for feature in FEATURES:
+        X[feature] = DATA[feature]
 
-Y = DATA['survived']
+    Y = DATA['survived']
 
-VALIDATION['survived']
+    classifier = tree.DecisionTreeClassifier(random_state=0)
+    classifier = GridSearchCV(
+        estimator=classifier,
+        param_grid=GRID,
+        verbose=100
+    )
 
-classifier = tree.DecisionTreeClassifier(random_state=0)
-classifier = GridSearchCV(
-    estimator=classifier,
-    param_grid=GRID,
-)
+    classifier.fit(X, Y)
 
-print(classifier)
+    with open(PICKLE, 'wb') as output:
+        pickle.dump(classifier, output)
 
+else:
+    print('Loading pickle file!')
+    classifier = None
+    with open(PICKLE, 'rb') as file_stream:
+        classifier = pickle.load(file_stream)
+
+
+print(classifier.best_score_)
+print(classifier.best_params_)
