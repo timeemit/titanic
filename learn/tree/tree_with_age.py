@@ -2,7 +2,7 @@ import pandas
 from sklearn import tree
 
 NAME = 'Tree With Age'
-PICKLE = 'learn/tree_with_age/tree.pkl'
+PICKLE = 'learn/tree/tree_with_age.pkl'
 
 FEATURES = [
     'age',

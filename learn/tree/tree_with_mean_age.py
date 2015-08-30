@@ -3,7 +3,7 @@ from numpy import nan
 from sklearn import tree
 
 NAME = 'Tree with Mean Age'
-PICKLE = 'learn/tree_with_mean_age/tree.pkl'
+PICKLE = 'learn/tree/tree_with_mean_age.pkl'
 
 FEATURES = [
     'age',
