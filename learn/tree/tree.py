@@ -4,7 +4,7 @@ import pandas
 from sklearn import tree
 from sklearn.grid_search import GridSearchCV
 
-DATA = pandas.read_csv('train/0.all.csv')
+DATA = pandas.read_csv('train/2.train.cross.csv')
 
 PICKLE = 'learn/tree/tree.pkl'
 
@@ -45,7 +45,8 @@ if not os.path.isfile('learn/tree/tree.pkl'):
     classifier = GridSearchCV(
         estimator=classifier,
         param_grid=GRID,
-        verbose=100
+        verbose=100,
+        n_jobs=-1
     )
 
     classifier.fit(X, Y)
