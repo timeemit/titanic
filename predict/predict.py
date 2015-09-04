@@ -1,6 +1,6 @@
 import pandas
 from learn.trainer import get_classifier
-from learn.trainer import A as winner
+from learn.trainer import D as winner
  
 DATA = pandas.read_csv('predict/input.csv')
 

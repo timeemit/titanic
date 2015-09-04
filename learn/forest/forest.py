@@ -1,8 +1,8 @@
 import pandas
-from sklearn import tree
+from sklearn.ensemble import RandomForestClassifier
 
-NAME = 'Tree'
-PICKLE = 'learn/tree/tree.pkl'
+NAME = 'Forest'
+PICKLE = 'learn/forest/forest.pkl'
 
 FEATURES = [
     # Ignoring age, since it is not always known
@@ -19,13 +19,14 @@ FEATURES = [
 ]
 
 GRID = {
+    'n_estimators': [4, 8, 16, 24],
     'criterion': ['gini', 'entropy'],
-    'splitter': ['best', 'random'],
     'max_features': ['sqrt', 'log2', None],
     'max_depth': [8, 16, 32, 64, 128],
     'min_samples_split': [1, 2, 4, 8, 16, 32],
     'min_samples_leaf': [1, 2, 4, 8, 16],
-    'max_leaf_nodes': [None, 16, 32, 64, 128, 256]
+    'max_leaf_nodes': [None, 16, 32, 64, 128, 256],
+
 }
 
 def data(imputed_data):
@@ -36,4 +37,4 @@ def data(imputed_data):
     return X
 
 def classifier():
-    return tree.DecisionTreeClassifier(random_state=0)
+    return RandomForestClassifier(random_state=0)

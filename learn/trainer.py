@@ -5,12 +5,13 @@ from sklearn.grid_search import GridSearchCV
 import tree.tree as A
 import tree.tree_with_age as B
 import tree.tree_with_mean_age as C
+import forest.forest as D
 
 
 DATA = pandas.read_csv('train/2.train.cross.csv')
 TEST = pandas.read_csv('train/3.test.csv')
 
-MODELS = [ A, B, C ]
+MODELS = [ A, B, C, D ]
 
 def build_new_classifier(model):
     print('No pickle file found, training a new classifier')
@@ -49,9 +50,6 @@ def get_classifier(model):
 
     return classifier
 
-def test_data():
-    return DATA, DATA['survived']
-
 def compare(x, y):
     df = pandas.DataFrame()
     for model in MODELS:
@@ -66,7 +64,7 @@ def compare(x, y):
         df[model.NAME] = series
     return df
 
-if __name__ == 'main':
-    x, y = test_data()
+if __name__ == '__main__':
+    x, y = DATA, DATA['survived']
     comparison = compare(x, y)
     print(comparison)
